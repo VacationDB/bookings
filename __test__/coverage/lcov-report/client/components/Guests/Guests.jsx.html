@@ -20,31 +20,31 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">12.5% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>2/16</span>
+        <span class='fraction'>16/16</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/13</span>
+        <span class='fraction'>13/13</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/3</span>
+        <span class='fraction'>3/3</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">13.33% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>2/15</span>
+        <span class='fraction'>15/15</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -167,39 +167,39 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -264,7 +264,7 @@
 import PropTypes from 'prop-types';
 import styles from './Guests.css';
 &nbsp;
-const Guests = <span class="fstat-no" title="function not covered" >(p</span>rops) =&gt; {
+const Guests = (props) =&gt; {
   const {
     guestCount,
     maxGuests,
@@ -274,29 +274,29 @@ const Guests = <span class="fstat-no" title="function not covered" >(p</span>rop
       plus,
       minus,
     },
-  } = <span class="cstat-no" title="statement not covered" >props;</span>
-  const renderButton = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(t</span>ype, btnIndex) =&gt; {</span>
+  } = props;
+  const renderButton = (type, btnIndex) =&gt; {
     // render an icon depending on whether the max guest limit is reached
     // remove click handler and add disabled class if max guest limit is reached
-    let icon = <span class="cstat-no" title="statement not covered" >plus;</span>
-    const incrementor = <span class="cstat-no" title="statement not covered" >btnIndex % 2 === 0 ? -1 : 1;</span>
-    let clickHandler = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >updateGuestCount(type, incrementor);</span></span>
-    let classNames = <span class="cstat-no" title="statement not covered" >styles.icon;</span>
+    let icon = plus;
+    const incrementor = btnIndex % 2 === 0 ? -1 : 1;
+    let clickHandler = () =&gt; updateGuestCount(type, incrementor);
+    let classNames = styles.icon;
     // check if btn index is even and assign icon variable
-<span class="cstat-no" title="statement not covered" >    if (btnIndex % 2 === 0) {</span>
-<span class="cstat-no" title="statement not covered" >      icon = minus;</span>
+    if (btnIndex % 2 === 0) {
+      icon = minus;
     }
     // check if max guest is reacehed and if current index is for
     // adult/children and if operating on plus icon
-<span class="cstat-no" title="statement not covered" >    if ((guestCount.adults + guestCount.children &gt;= maxGuests</span>
+    if ((guestCount.adults + guestCount.children &gt;= maxGuests
         &amp;&amp; (btnIndex === 1 || btnIndex === 3))
       || (guestCount[type] === 0 &amp;&amp; btnIndex % 2 === 0)
       || (btnIndex === 0 &amp;&amp; guestCount.adults === 1)) {
-<span class="cstat-no" title="statement not covered" >      classNames += ` ${styles.disabled}`;</span>
-<span class="cstat-no" title="statement not covered" >      clickHandler = null;</span>
+      classNames += ` ${styles.disabled}`;
+      clickHandler = null;
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
+    return (
       &lt;img 
         src={icon} 
         id={`guest-btn-${btnIndex}`} 
@@ -306,7 +306,7 @@ const Guests = <span class="fstat-no" title="function not covered" >(p</span>rop
     );
   };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;div className={styles.guestToggle} id="guest-toggle"&gt;
       &lt;div className={styles.adultGuestToggle} id="adult-guest-toggle"&gt;
         &lt;p className={styles.guestLabel}&gt;
@@ -373,7 +373,7 @@ export default Guests;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Aug 02 2018 15:07:00 GMT-0700 (Pacific Daylight Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Aug 03 2018 18:50:34 GMT-0700 (Pacific Daylight Time)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

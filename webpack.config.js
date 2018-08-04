@@ -1,25 +1,32 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
+const webpack = require('webpack');
 
-const ENTRY_POINT = path.resolve(__dirname, 'client/index.jsx');
+const ENTRY_POINT = path.resolve(__dirname, 'server/app.jsx');
 const OUTPUT_DIR = path.resolve(__dirname, 'public');
 
 module.exports = {
   entry: ENTRY_POINT,
   output: {
-    filename: 'bundle.js',
+    filename: 'server.js',
     path: OUTPUT_DIR,
   },
+  target: 'node',
   devtool: 'source-map',
+  externals: nodeExternals(),
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: 'production',
+      },
+    }),
+  ],
   resolve: { extensions: ['.js', '.jsx'] },
   module: {
     rules: [
       {
         test: /\.css$/,
-        loader: 'style-loader',
-      },
-      {
-        test: /\.css$/,
-        loader: 'css-loader',
+        loader: 'css-loader/locals',
         query: {
           modules: true,
           localIdentName: '[name]__[local]___[hash:base64:5]',

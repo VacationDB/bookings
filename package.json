@@ -30,7 +30,7 @@
   },
   "scripts": {
     "build": "webpack -d",
-    "start": "node server/database/dataGenerator.js && node server/index.js",
+    "start": "node server/database/dataGenerator.js && node public/server.js",
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon --inspect server/index.js",
     "seed-db": "node ./server/database/dataGenerator.js",
@@ -55,7 +55,8 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "superagent": "^3.8.3",
-    "supertest": "^3.1.0"
+    "supertest": "^3.1.0",
+    "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -77,7 +78,6 @@
     "grunt-aws": "^0.6.2",
     "grunt-contrib-nodeunit": "^2.0.0",
     "grunt-contrib-uglify": "^3.4.0",
-    "grunt-s3": "^0.2.0-alpha.3",
     "jest": "^23.4.1",
     "jest-cli": "^23.4.1",
     "jest-enzyme": "^6.0.2",

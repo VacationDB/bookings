@@ -1,4 +1,4 @@
-const app = require('./app.js');
+const app = require('./app.jsx');
 
 // set port environment variable to prepare for deployment
 const port = process.env.PORT || 3004;
