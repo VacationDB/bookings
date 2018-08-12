@@ -10,7 +10,7 @@ const listingSchema = new Schema({
   serviceFee: Number,
   minStay: Number,
   maxGuests: Number,
-  availableDates: [[Number]],
+  availableDates: String,
 });
 
 const Listing = mongoose.model('Listing', listingSchema);

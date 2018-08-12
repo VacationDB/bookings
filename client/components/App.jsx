@@ -64,10 +64,21 @@ export default class App extends React.Component {
       const id = +path[path.length - 2] || 1;
       fetch(`/api/listings/${id}`)
         .then(res => res.json())
-        .then((body) => { this.setState({ ...body }); })
+        .then((body) => {
+          this.setState({
+            id: body.id,
+            price: body.price,
+            cleaningFee: body.cleaningFee,
+            serviceFee: body.serviceFee,
+            minStay: body.minStay,
+            maxGuests: body.maxGuests,
+            availableDates: JSON.parse(body.availableDates),
+          });
+        })
         .catch((err) => { throw err; });
     }
   }
+
 
   setNextStage(newStage) {
     const { checkOutStage } = this.state;

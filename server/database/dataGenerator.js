@@ -53,7 +53,7 @@ const generateBookings = function () {
     }
     currentDate = new Date(year, currentMonth, 1);
   }
-  return bookings;
+  return JSON.stringify(bookings);
 };
 
 const generator = function () {
