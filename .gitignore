@@ -27,3 +27,6 @@ build/
 dist/
 public/
 
+# Data for Testing purposes
+server/database/data/*.csv
+
