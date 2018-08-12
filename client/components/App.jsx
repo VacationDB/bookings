@@ -130,10 +130,11 @@ export default class App extends React.Component {
       classNames = styles.currentStage;
     }
     return (
-      <p 
-        className={classNames} 
-        id={`${titles[titleStage].toLowerCase()}`} 
-        onClick={() => this.setNextStage(titleStage + 1)}>
+      <p
+        className={classNames}
+        id={`${titles[titleStage].toLowerCase()}`}
+        onClick={() => this.setNextStage(titleStage + 1)}
+      >
         {text}
       </p>);
   }
