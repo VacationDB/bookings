@@ -44,4 +44,23 @@ app.post('/api/submit', (req, res) => {
   });
 });
 
+//add CRUD API
+app.put('/api/listings/:listingId', (req, res) => {
+  Model.findByIdAndUpdate(req.params.listingId, req.body, { new: true }, (err, bookingsInfo) => {
+    if (err) return res.status(405).send(err);
+    return res.send(bookingsInfo);
+  });
+});
+
+app.delete('/api/listings/:listingId', (req, res) => {
+  Model.findByIdAndRemove(req.params.listingId, (err, booking) => {
+    if (err) return res.status(500).send(err);
+    const response = {
+      message: 'Reservation has been deleted',
+      id: booking.id,
+    };
+    return res.status(200).send(response);
+  });
+});
+
 module.exports = app;
