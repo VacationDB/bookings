@@ -2,7 +2,7 @@ const express = require('express');
 
 const app = express();
 const parser = require('body-parser');
-const Model = require('./database/index');
+const Model = require('./database/model');
 
 app.use(express.static('./public'));
 
@@ -23,10 +23,9 @@ app.use((req, res, next) => {
 app.get('/api/listings/:listingId', (req, res) => {
   const { listingId } = req.params;
   // query Model for that index
-  Model.findOne({ id: listingId }).exec((err, data) => {
-    if (err) { throw err; }
-    res.send(data);
-  });
+  Model.getData(listingId)
+    .then(data => res.setMaxListeners(200).send(data))
+    .catch(err => res.status(500).send(err));
 });
 
 app.post('/api/submit', (req, res) => {
@@ -42,9 +41,13 @@ app.post('/api/submit', (req, res) => {
       res.send(doc);
     });
   });
+  // const searchTerm = req.params.searchTerm;
+  // db.returnSearch(id, searchTerm)
+  //   .then(results => res.setMaxListeners(200).send(results))
+  //   .catch(err => res.status(500).send(err));
 });
 
-//add CRUD API
+// add CRUD API
 app.put('/api/listings/:listingId', (req, res) => {
   Model.findByIdAndUpdate(req.params.listingId, req.body, { new: true }, (err, bookingsInfo) => {
     if (err) return res.status(405).send(err);

@@ -1,6 +1,6 @@
-const Model = require('./index');
+const Model = require('./model');
 
-Model.remove({}, (err) => {
+Model.Listing.remove({}, (err) => {
   if (err) {
     throw err;
   }
@@ -70,7 +70,7 @@ const generator = function () {
       availableDates: generateBookings(),
     });
   }
-  Model.insertMany(data, (err) => {
+  Model.Listing.insertMany(data, (err) => {
     if (err) throw err;
     process.exit();
   });
