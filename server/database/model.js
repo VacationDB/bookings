@@ -1,23 +1,28 @@
-const mongoose = require('mongoose');
+// require('dotenv').config()
+const { Pool } = require('pg');
 
-mongoose.connect('mongodb://database:27017/listings', { useNewUrlParser: true });
-const { Schema } = mongoose;
+const config = {
+  user: dianey,
+  database: dianey,
+  max_connections: 250
+};
 
-const listingSchema = new Schema({
-  id: Number,
-  price: Number,
-  cleaningFee: Number,
-  serviceFee: Number,
-  minStay: Number,
-  maxGuests: Number,
-  availableDates: String,
-});
+const pool = new Pool();
 
-const Listing = mongoose.model('Listing', listingSchema);
-
-const getData = id => (
-  Listing.findOne({ id })
-);
+const getData = (id, cb) => {
+  pool.connect((err, client) => {
+    if (err) {
+      return console.error('Error acquiring client', err.stack)
+    }
+    const query = 'SELECT * from reservations WHERE id < 10';
+    client.query(query, (err, result) => {
+      if (err) {
+        return console.error('Error executing query', err.stack)
+      }
+      console.log(result.rows)
+    });
+  });
+};
 
 const changeDates = (checkIn, checkOut, id) => {
   Model.findOne({ id }).exec((error, doc) => {
@@ -33,26 +38,7 @@ const changeDates = (checkIn, checkOut, id) => {
   });
 }
 
-// 
 
 module.exports.Listing = Listing;
 module.exports.getData = getData;
 module.exports.changeDates = changeDates;
-
-
-// const { Pool } = require('pg')
-
-// const pool = new Pool()
-
-// pool.connect((err, client, release) => {
-//   if (err) {
-//     return console.error('Error acquiring client', err.stack)
-//   }
-//   client.query('SELECT NOW()', (err, result) => {
-//     release()
-//     if (err) {
-//       return console.error('Error executing query', err.stack)
-//     }
-//     console.log(result.rows)
-//   })
-// })
