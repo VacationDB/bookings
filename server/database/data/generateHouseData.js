@@ -16,7 +16,27 @@ const serviceFee = function (initialPrice) {
   return Math.ceil(initialPrice * percent);
 };
 
-// generate a year of availability info based on the current date
+const generator = function () {
+  const nightlyPrice = price();
+  let data = `0,house0,${nightlyPrice},${cleaning()},${serviceFee(nightlyPrice)},${3 + random(6)},${random(10)}`;
+  for (let i = 1; i < 10000000; i++) {
+    const nightlyPrice = price();
+    data += `\n${i},house${i},${nightlyPrice},${cleaning()},${serviceFee(nightlyPrice)},${3 + random(6)},${random(10)}`;
+  }
+  console.log(data);
+};
+
+console.log(`id, housename, price, cleaningFee, serviceFee, minStay, maxGuests`);
+generator();
+
+//in command line: run "time node --max-old-space-size=12192 server/database/data/generateHouseData.js | gzip -c > server/database/data/houseData.csv.gz"
+// result: 
+// node --max-old-space-size=12192 server/database/data/generateHouseData.js  24.67s user 6.13s system 58% cpu 52.482 total
+// gzip -c > server/database/data/houseData.csv.gz  22.69s user 0.08s system 43% cpu 52.482 total
+// added flag to process to increase heapsize to create csv in one line
+
+
+generate a year of availability info based on the current date
 const generateBookings = function () {
   let bookings = [];
   
@@ -49,20 +69,3 @@ const generateBookings = function () {
   bookings = JSON.stringify(bookings);
   return bookings;
 };
-
-
-const generator = function () {
-  let nightlyPrice = price();
-  let data = `0,house0,${nightlyPrice},${cleaning()},${serviceFee(nightlyPrice)},${3 + random(6)},${random(10)},"${generateBookings()}"`;
-  for (let i = 1; i < 10000000; i++) {
-    let nightlyPrice = price();
-    data += `\n${i},house${i},${nightlyPrice},${cleaning()},${serviceFee(nightlyPrice)},${3 + random(6)},${random(10)},"${generateBookings()}"`;
-  }
-  console.log(data);
-};
-
-console.log(`id, housename, price, cleaningFee, serviceFee, minStay, maxGuests, availableDates`);
-generator();
-
-//in command line: run "node server/database/data/testingDataGenerator.js | gzip -c > server/database/data/testingData.csv.gz"
-//if not enough HEAP memory: edit to create CSV of 100K at a time, then cat csv files together
