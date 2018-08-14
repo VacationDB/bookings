@@ -4,25 +4,27 @@ const { Pool } = require('pg');
 const config = {
   user: dianey,
   database: dianey,
-  max_connections: 250
+  max_connections: 50,
 };
 
 const pool = new Pool();
 
+pool.connect((err, client) => {
+  if (err) {
+    return console.error('Error acquiring client', err.stack);
+  }
+});
+
 const getData = (id, cb) => {
-  pool.connect((err, client) => {
-    if (err) {
-      return console.error('Error acquiring client', err.stack)
-    }
-    const query = 'SELECT * from reservations WHERE id < 10';
-    client.query(query, (err, result) => {
+    const query = `SELECT * from reservations WHERE id=${id}`;
+    client.query(query, (error, result) => {
       if (err) {
-        return console.error('Error executing query', err.stack)
+        return console.error('Error executing query', error.stack);
       }
-      console.log(result.rows)
+      console.log(result.rows);
+      cb(result.rows);
     });
   });
-};
 
 const changeDates = (checkIn, checkOut, id) => {
   Model.findOne({ id }).exec((error, doc) => {
@@ -39,6 +41,6 @@ const changeDates = (checkIn, checkOut, id) => {
 }
 
 
-module.exports.Listing = Listing;
+//module.exports.Listing = Listing;
 module.exports.getData = getData;
 module.exports.changeDates = changeDates;

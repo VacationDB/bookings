@@ -23,29 +23,32 @@ app.use((req, res, next) => {
 app.get('/api/listings/:listingId', (req, res) => {
   const { listingId } = req.params;
   // query Model for that index
-  Model.getData(listingId)
-    .then(data => res.setMaxListeners(200).send(data))
-    .catch(err => res.status(500).send(err));
+  Model.getData(listingId, (error, data) => {
+    if (error) {
+      res.status(500).send(error);
+    }
+    res.setMaxListeners(200).send(data);
+  });
 });
 
-app.post('/api/submit', (req, res) => {
-  const { checkIn, checkOut, id } = req.body;
-  Model.findOne({ id }).exec((error, doc) => {
-    const { availableDates } = doc;
-    const newMonth = availableDates[checkIn.index].filter(date => (
-      (date < checkIn.date || date > checkOut.date)
-    ));
-    availableDates[checkIn.index] = newMonth;
-    doc.save((err) => {
-      if (err) { throw err; }
-      res.send(doc);
-    });
-  });
-  // const searchTerm = req.params.searchTerm;
-  // db.returnSearch(id, searchTerm)
-  //   .then(results => res.setMaxListeners(200).send(results))
-  //   .catch(err => res.status(500).send(err));
-});
+// app.post('/api/submit', (req, res) => {
+//   const { checkIn, checkOut, id } = req.body;
+//   Model.findOne({ id }).exec((error, doc) => {
+//     const { availableDates } = doc;
+//     const newMonth = availableDates[checkIn.index].filter(date => (
+//       (date < checkIn.date || date > checkOut.date)
+//     ));
+//     availableDates[checkIn.index] = newMonth;
+//     doc.save((err) => {
+//       if (err) { throw err; }
+//       res.send(doc);
+//     });
+//   });
+//   // const searchTerm = req.params.searchTerm;
+//   // db.returnSearch(id, searchTerm)
+//   //   .then(results => res.setMaxListeners(200).send(results))
+//   //   .catch(err => res.status(500).send(err));
+// });
 
 // add CRUD API
 app.put('/api/listings/:listingId', (req, res) => {
