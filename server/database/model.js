@@ -19,7 +19,8 @@ pool.connect((err, poolClient) => {
 
 // READ / GET
 const getData = (id, cb) => {
-  const query = `SELECT * from reservations WHERE id=${id}`;
+  const query = `select * from housedata join reservations on housedata.id=reservations.id where housedata.id=${id}
+  order by duration desc;`;
   client.query(query, (err, result) => {
     if (err) {
       return console.error('Error executing query', error.stack);
@@ -30,7 +31,7 @@ const getData = (id, cb) => {
 };
 
 // POST
-const addDates = (id, checkin, duration) => {
+const addDates = (id, checkin, duration, cb) => {
   const query = `INSERT INTO reservations(id, checkin, duration) VALUES(${id},${checkin},${duration})`;
   client.query(query, (err, result) => {
     if (err) {
@@ -42,7 +43,7 @@ const addDates = (id, checkin, duration) => {
 };
 
 // PUT
-const changeDates = (reservationNum, id, checkin, duration) => {
+const changeDates = (reservationNum, id, checkin, duration, cb) => {
   const query = `UPDATE reservations SET id=${id}, checkin=${checkin}, duration=${duration} WHERE reservationNum=${reservationNum}`;
   client.query(query, (err, result) => {
     if (err) {
@@ -54,7 +55,7 @@ const changeDates = (reservationNum, id, checkin, duration) => {
 };
 
 // DELETE
-const deleteReservation = (reservationNum) => {
+const deleteReservation = (reservationNum, cb) => {
   const query = `DELETE FROM reservations WHERE reservationNum=${reservationNum}`;
   client.query(query, (err) => {
     if (err) {

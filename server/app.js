@@ -19,6 +19,7 @@ app.use((req, res, next) => {
   next();
 });
 
+
 // return a random calendar to client
 app.get('/api/listings/:listingId', (req, res) => {
   const { listingId } = req.params;
@@ -31,11 +32,14 @@ app.get('/api/listings/:listingId', (req, res) => {
   });
 });
 
-addDates
 app.post('/api/submit', (req, res) => {
-  db.addDates(
-    
-  );
+  const { id, checkin, duration } = req.params;
+  db.addDates(id, checkin, duration, (error, data) => {
+    if (error) {
+      res.setMaxListeners(500).send(error);
+    }
+    res.setMaxListeners(200).send(data);
+  });
 });
 
 // const { checkIn, checkOut, id } = req.body;
@@ -51,15 +55,13 @@ app.post('/api/submit', (req, res) => {
 //   });
 // });
 // const searchTerm = req.params.searchTerm;
-// db.returnSearch(id, searchTerm)
-//   .then(results => res.setMaxListeners(200).send(results))
-//   .catch(err => res.status(500).send(err));
 // add CRUD API
 
 app.put('/api/listings/:listingId', (req, res) => {
   const { listingId } = req.params;
+  const { reservationNum, checkin, duration } = req.body;
   // query db for that index
-  db.changeDates(listingId, (error, data) => {
+  db.changeDates(reservationNum, listingId, checkin, duration, (error, data) => {
     if (error) {
       res.status(500).send(error);
     }
@@ -68,9 +70,9 @@ app.put('/api/listings/:listingId', (req, res) => {
 });
 
 app.delete('/api/listings/:listingId', (req, res) => {
-  const { listingId } = req.params;
+  const { reservationNum } = req.body;
   // query db for that index
-  db.deleteReservation(listingId, (error, data) => {
+  db.deleteReservation(reservationNum, (error, data) => {
     if (error) {
       res.status(500).send(error);
     }
