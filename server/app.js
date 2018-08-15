@@ -2,7 +2,7 @@ const express = require('express');
 
 const app = express();
 const parser = require('body-parser');
-const Model = require('./database/model');
+const db = require('./database/model');
 
 app.use(express.static('./public'));
 
@@ -22,8 +22,8 @@ app.use((req, res, next) => {
 // return a random calendar to client
 app.get('/api/listings/:listingId', (req, res) => {
   const { listingId } = req.params;
-  // query Model for that index
-  Model.getData(listingId, (error, data) => {
+  // query db for that index
+  db.getData(listingId, (error, data) => {
     if (error) {
       res.status(500).send(error);
     }
@@ -31,40 +31,50 @@ app.get('/api/listings/:listingId', (req, res) => {
   });
 });
 
-// app.post('/api/submit', (req, res) => {
-//   const { checkIn, checkOut, id } = req.body;
-//   Model.findOne({ id }).exec((error, doc) => {
-//     const { availableDates } = doc;
-//     const newMonth = availableDates[checkIn.index].filter(date => (
-//       (date < checkIn.date || date > checkOut.date)
-//     ));
-//     availableDates[checkIn.index] = newMonth;
-//     doc.save((err) => {
-//       if (err) { throw err; }
-//       res.send(doc);
-//     });
-//   });
-//   // const searchTerm = req.params.searchTerm;
-//   // db.returnSearch(id, searchTerm)
-//   //   .then(results => res.setMaxListeners(200).send(results))
-//   //   .catch(err => res.status(500).send(err));
-// });
+addDates
+app.post('/api/submit', (req, res) => {
+  db.addDates(
+    
+  );
+});
 
+// const { checkIn, checkOut, id } = req.body;
+// db.findOne({ id }).exec((error, doc) => {
+//   const { availableDates } = doc;
+//   const newMonth = availableDates[checkIn.index].filter(date => (
+//     (date < checkIn.date || date > checkOut.date)
+//   ));
+//   availableDates[checkIn.index] = newMonth;
+//   doc.save((err) => {
+//     if (err) { throw err; }
+//     res.send(doc);
+//   });
+// });
+// const searchTerm = req.params.searchTerm;
+// db.returnSearch(id, searchTerm)
+//   .then(results => res.setMaxListeners(200).send(results))
+//   .catch(err => res.status(500).send(err));
 // add CRUD API
+
 app.put('/api/listings/:listingId', (req, res) => {
-  Model.findByIdAndUpdate(req.params.listingId, req.body, { new: true }, (err, bookingsInfo) => {
-    if (err) return res.status(405).send(err);
-    return res.send(bookingsInfo);
+  const { listingId } = req.params;
+  // query db for that index
+  db.changeDates(listingId, (error, data) => {
+    if (error) {
+      res.status(500).send(error);
+    }
+    res.setMaxListeners(200).send(data);
   });
 });
+
 app.delete('/api/listings/:listingId', (req, res) => {
-  Model.findByIdAndRemove(req.params.listingId, (err, booking) => {
-    if (err) return res.status(500).send(err);
-    const response = {
-      message: 'Reservation has been deleted',
-      id: booking.id,
-    };
-    return res.status(200).send(response);
+  const { listingId } = req.params;
+  // query db for that index
+  db.deleteReservation(listingId, (error, data) => {
+    if (error) {
+      res.status(500).send(error);
+    }
+    res.setMaxListeners(200).send(data);
   });
 });
 
