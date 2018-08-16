@@ -65,20 +65,60 @@ export default class App extends React.Component {
       fetch(`/api/listings/${id}`)
         .then(res => res.json())
         .then((body) => {
+
+          // Convert New Data Shape of date objects into expected matrix of AvailableDates original code format
+          const convertDatesIntoCalender = (body) => {
+            // create full calender
+            const createMonth = (max) => {
+              const array = [];
+              for (let n = 1; n <= max; n++) {
+                array.push(n);
+              }
+              return array;
+            };
+            const calender = [
+              createMonth(31), // Jan
+              createMonth(28), // Feb
+              createMonth(31),
+              createMonth(30),
+              createMonth(31),
+              createMonth(30),
+              createMonth(31),
+              createMonth(31),
+              createMonth(30),
+              createMonth(31),
+              createMonth(30),
+              createMonth(31),
+            ];
+            for (let i = 0; i < body.length; i++) {
+              const { checkin, duration } = body[i];
+              const checkInDate = new Date(checkin);
+              const month = checkInDate.getMonth(); // get 0-11
+              const day = checkInDate.getDate(); // get 1-31
+              for (let j = 0; j < calender[month].length; j++) {
+                if (calender[month][j] === day) {
+                  // can refactor lator to more accurately change duration using index and values
+                  calender[month].splice(j, duration);
+                }
+              }
+            }
+            return calender;
+          };
+
+          const newAvailableDates = convertDatesIntoCalender(body);
           this.setState({
-            id: body.id,
-            price: body.price,
-            cleaningFee: body.cleaningFee,
-            serviceFee: body.serviceFee,
-            minStay: body.minStay,
-            maxGuests: body.maxGuests,
-            availableDates: JSON.parse(body.availableDates),
+            id: body[0].id,
+            price: body[0].price,
+            cleaningFee: body[0].cleaningFee,
+            serviceFee: body[0].serviceFee,
+            minStay: body[0].minStay,
+            maxGuests: body[0].maxGuests,
+            availableDates: newAvailableDates,
           });
         })
         .catch((err) => { throw err; });
     }
   }
-
 
   setNextStage(newStage) {
     const { checkOutStage } = this.state;
@@ -230,6 +270,9 @@ export default class App extends React.Component {
       checkIn,
       checkOut,
     };
+    console.log("checkin", checkin);
+    console.log(typeof checkin);
+    console.log("checkout", checkout);
 
     fetch('/api/submit', {
       method: 'post',

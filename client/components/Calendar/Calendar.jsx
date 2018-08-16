@@ -189,4 +189,8 @@ Calendar.propTypes = {
   clearDates: PropTypes.func.isRequired,
 };
 
+// Calender.defaultProps = {
+//   minStay: 5,
+// };
+
 export default Calendar;

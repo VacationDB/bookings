@@ -18,6 +18,6 @@ CREATE TABLE reservations (
 );
 
 COPY reservations (id, checkin, duration) 
-  FROM './reservationsData.csv' delimiter ',' CSV HEADER;
+  FROM '/Users/dianey/myProjects/VacationDB/bookings/server/database/data/reservationsData.csv' delimiter ',' CSV HEADER;
 
 UPDATE reservations SET duration=5 WHERE id=1000000;

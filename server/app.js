@@ -25,6 +25,7 @@ app.get('/api/listings/:listingId', (req, res) => {
   const { listingId } = req.params;
   // query db for that index
   db.getData(listingId, (data) => {
+    console.log("data: ", data);
     res.setMaxListeners(200).send(data);
   });
 });
