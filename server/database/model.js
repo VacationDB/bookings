@@ -25,7 +25,6 @@ const getData = (id, cb) => {
     if (err) {
       return console.error('Error executing query', error.stack);
     }
-    console.log(result.rows);
     cb(result.rows);
   });
 };

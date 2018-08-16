@@ -24,10 +24,7 @@ app.use((req, res, next) => {
 app.get('/api/listings/:listingId', (req, res) => {
   const { listingId } = req.params;
   // query db for that index
-  db.getData(listingId, (error, data) => {
-    if (error) {
-      res.status(500).send(error);
-    }
+  db.getData(listingId, (data) => {
     res.setMaxListeners(200).send(data);
   });
 });
