@@ -31,4 +31,6 @@ public/
 server/database/data/*.csv
 server/database/data/*gz
 
+# Files containing keys
 .env
+newrelic.js

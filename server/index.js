@@ -1,3 +1,4 @@
+require('newrelic');
 const app = require('./app.js');
 
 // set port environment variable to prepare for deployment
