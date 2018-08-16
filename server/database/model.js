@@ -4,6 +4,7 @@ const { Pool } = require('pg');
 const config = {
   user: process.env.DB_user,
   database: process.env.DB_database,
+  // port: ####,
   max_connections: 50,
 };
 
