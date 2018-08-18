@@ -1,8 +1,17 @@
 const express = require('express');
+const redis = require('redis');
 
 const app = express();
 const parser = require('body-parser');
 const db = require('./database/model');
+
+const client = redis.createClient(6379, 'localhost');
+
+client.on('connect', () => console.log('redis connected'));
+client.on("error", function (err) {
+  console.log("Error " + err);
+});
+
 
 app.use(express.static('./public'));
 
@@ -19,14 +28,24 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // return a random calendar to client
 app.get('/api/listings/:listingId', (req, res) => {
   const { listingId } = req.params;
   // query db for that index
-  db.getData(listingId, (data) => {
-    // console.log("data: ", data);
-    res.setMaxListeners(200).send(data);
+  client.get(listingId, (err, reply) => {
+    if (err) console.error(`Redis get ${err}`);
+    if (reply) {
+      // console.log("Retrieved Redis Cache")
+      const body = JSON.parse(reply);
+      res.send(body);
+    } else {
+      db.getData(listingId, (data) => {
+      // console.log("data: ", data);
+        client.setex(listingId, 3000, JSON.stringify(data));
+        // console.log("Set Redis Cache");
+        res.setMaxListeners(200).send(data);
+      });
+    }
   });
 });
 
