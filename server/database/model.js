@@ -1,10 +1,12 @@
-require('dotenv').config()
+require('dotenv').config();
 const { Pool } = require('pg');
 
 const config = {
+  serverName: process.env.DB_HOST,
   user: process.env.DB_user,
-  database: process.env.DB_database,
-  // port: ####,
+  databaseName: process.env.DB_database,
+  portNumber: 5432,
+  password: process.env.DB_PASSWORD,
   max_connections: 50,
 };
 
@@ -12,6 +14,7 @@ const pool = new Pool(config);
 
 pool.connect((err, poolClient) => {
   if (err) {
+    console.log('test');
     return console.error('Error acquiring client', err.stack);
   }
   console.log('client has connected');
