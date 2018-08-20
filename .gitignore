@@ -30,6 +30,7 @@ public/
 # Data for Testing purposes
 server/database/data/*.csv
 server/database/data/*gz
+dump.rdb
 
 # Files containing keys
 .env
