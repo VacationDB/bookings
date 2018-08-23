@@ -2,6 +2,7 @@ require('newrelic');
 const express = require('express');
 const redis = require('redis');
 const cluster = require('cluster');
+
 const app = express();
 
 if (cluster.isMaster) {
@@ -65,7 +66,7 @@ if (cluster.isMaster) {
           // console.log("data: ", data);
           redisClient.setex(listingId, 3000, JSON.stringify(data));
           // console.log("Set Redis Cache");
-          res.setMaxListeners(200).send(data);
+          res.send(data);
         });
       }
     });
@@ -75,9 +76,9 @@ if (cluster.isMaster) {
     const { id, checkin, duration } = req.params;
     db.addDates(id, checkin, duration, (error, data) => {
       if (error) {
-        res.setMaxListeners(500).send(error);
+        res.send(error);
       }
-      res.setMaxListeners(200).send(data);
+      res.send(data);
     });
   });
   
@@ -104,7 +105,7 @@ if (cluster.isMaster) {
       if (error) {
         res.status(500).send(error);
       }
-      res.setMaxListeners(200).send(data);
+      res.send(data);
     });
   });
   
@@ -115,7 +116,7 @@ if (cluster.isMaster) {
       if (error) {
         res.status(500).send(error);
       }
-      res.setMaxListeners(200).send(data);
+      res.send(data);
     });
   });
 }

@@ -65,7 +65,6 @@ export default class App extends React.Component {
       fetch(`/api/listings/${id}`)
         .then(res => res.json())
         .then((body) => {
-
           // Convert New Data Shape of date objects into expected matrix of AvailableDates original code format
           const convertDatesIntoCalender = (body) => {
             // create full calender
